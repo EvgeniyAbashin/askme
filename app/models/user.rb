@@ -9,7 +9,8 @@ class User < ApplicationRecord
   validates :email, :username, presence: true
   validates :email, :username, uniqueness: true
   validates :username, length: {maximum: 40}, format: {with: /\w/}
-  validates :email, format: {with: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/}
+  validates :email, format: {with: /[a-zA-Z0-9_.+-]{1,}+@[a-zA-Z0-9-]{1,}+\.[a-zA-Z0-9-.]{1,7}/}
+
 
 
   attr_accessor :password
@@ -17,6 +18,11 @@ class User < ApplicationRecord
   validates_confirmation_of :password
 
   before_save :encrypt_password
+  before_validation :normalize_username
+
+  def normalize_username
+    self.username = username.downcase
+  end
 
   def self.hash_to_string(password_hash)
     password_hash.unpack('H*')[0]

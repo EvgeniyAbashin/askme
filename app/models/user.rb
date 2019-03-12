@@ -21,7 +21,9 @@ class User < ApplicationRecord
   before_validation :normalize_username
 
   def normalize_username
-    self.username = username.downcase
+     if self.username.present?
+       self.username = username.downcase
+     end
   end
 
   def self.hash_to_string(password_hash)

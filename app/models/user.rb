@@ -8,8 +8,8 @@ class User < ApplicationRecord
 
   validates :email, :username, presence: true
   validates :email, :username, uniqueness: true
-  validates :username, length: {maximum: 40}, format: {with: /[a-zA-Z0-9_]+/}
-  validates :email, format: {with: /\A[a-zA-Z0-9а-яА-Я_\-]+@[а-яa-z]+\.[a-zа-я]{2,6}\z/}
+  validates :username, length: {maximum: 40}, format: {with: /\A[a-zA-Z0-9_]+\z/}
+  validates :email, format: {with: /\A.+@.+\..+\z/}
 
 
 
@@ -21,9 +21,9 @@ class User < ApplicationRecord
   before_validation :normalize_username
 
   def normalize_username
-     if self.username.present?
-       self.username = username.downcase
-     end
+    if username.present?
+      self.username = username.downcase
+    end
   end
 
   def self.hash_to_string(password_hash)

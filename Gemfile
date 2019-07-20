@@ -8,10 +8,7 @@ source 'https://rubygems.org'
 gem 'rails', '~> 4.2.8'
 gem 'jquery-rails'
 gem 'uglifier'
-
-group :production do
-	gem 'pg'
-end
+gem 'pg'
 
 group :development, :test do
   gem 'byebug'
